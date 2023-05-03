@@ -5,37 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         .notdone{
-        background: lightcyan;
+            background: lightcoral;
         }
         .done{
-            background: lightgray;
+            background: lightgreen;
         }
         .close{
             background: darkkhaki;
         }
+        .headerMonth{
+            text-align: center;
+            font-size: 20px;
+            text-decoration: underline;
+        }
+        .paid{
+            border:3px solid lightgreen;
+        }
+        .notpaid{
+            border:3px solid lightcoral;
+        }
+        .notpaid.close{
+            background: none;
+            border: 0px;
+        }
     </style>
-    <title>Laravel</title>
+    <title>Расписание ученика {{ $student->name }}</title>
 
 </head>
 <body>
-show_table {{ $id }}</br>
-<table>
-    <thead>
-    <tr>
-        <th>ПН</th>
-        <th>ВТ</th>
-        <th>СР</th>
-        <th>ЧТ</th>
-        <th>ПТ</th>
-        <th>СБ</th>
-        <th>ВСК</th>
-    </tr>
-    </thead>
-    <tbody>
-        {!! $calendar !!}
-    </tbody>
-</table>
-
+расписание ученика {{ $student->name }}</br>
+{!! $before_month_calendar !!}
+{!! $actual_calendar !!}
+{!! $next_month_calendar !!}
 
 </body>
 </html>
