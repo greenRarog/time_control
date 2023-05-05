@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Lesson;
 
 class ApiLessonController extends Controller
 {
@@ -25,9 +26,18 @@ class ApiLessonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($month, $day, $year)
     {
-        //
+        $lesson = Lesson::where('date', $year . '-' . $month . '-' . $day);
+
+        return json_encode([
+            'id' => $lesson->id,
+            'date' => substr($lesson->datetime, 0,10),
+            'time' => substr($lesson->datetime, 11, 8),
+            'paid' => $lesson->paid,
+            'status' => $lesson->status,
+            'cost' => $lesson->cost,
+        ]);
     }
 
     /**

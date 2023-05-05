@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->integer('student_id');
-            $table->dateTime('datetime');
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
             $table->boolean('paid')->default(0);
             $table->string('status')->default('not done');
             $table->integer('cost')->default(800);

@@ -50,40 +50,42 @@
     <div>{!! $next_month_calendar !!}</div>
         <input hidden class="inputMonth"><br>
         <input hidden class="inputDay"><br>
+        <input hidden class="inputYear"><br>
 </div>
 
 <script>
 let tables = document.querySelectorAll('table');
 let inputMonth = document.querySelector('.inputMonth');
+let inputYear = document.querySelector('.inputYear');
 for(let table of tables){
     table.addEventListener('click', function(){
         inputMonth.value = table.getAttribute('tablemonth');
+        inputYear.value = table.getAttribute('tableyear');
     });
 }
 
 let tds = document.querySelectorAll('td');
 let inputDay = document.querySelector('.inputDay');
 for(let td of tds){
-    td.addEventListener('click', function() {
-        inputDay.value = td.innerHTML;
-        let old = document.querySelectorAll('.active');
-        for(let o of old){
-            o.classList.remove('active');
-        }
-        td.classList.add('active');
-    });
+    td.addEventListener('click', getInfo);
 }
 
-function getInfo(day, month){
-    fetch('api/' + month + '/' + day).then(
+function getInfo(){
+    let olds = document.querySelectorAll('.active');
+    for(let old of olds){
+        old.classList.remove('active');
+    }
+    this.classList.add('active');
+    //console.log(this.param);
+    /*fetch('api/year=' + year '&month=' + month + '&day=' + this.innerHTML).then(
         response => {
-            return response.text();
+            return response.json();
         }
     ).then(
-        text => {
-            console.log(text);
+        data => {
+            console.log(data);
         }
-    )
+    )*/
 }
 </script>
 </body>

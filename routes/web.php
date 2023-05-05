@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ApiLessonController;
 use App\Http\Controllers\StudentController;
 
 /*
@@ -32,5 +33,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/show/{id}', [LessonController::class, 'show']);
 Route::match(['get','post'], '/student/{id}', [LessonController::class, 'change']);
-
+Route::any('/api', [ApiLessonController::class, 'show']);
 require __DIR__.'/auth.php';

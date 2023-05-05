@@ -14,8 +14,8 @@ class LessonController extends Controller
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = $this->normalize_month($month + 1);
-        $before_month = $this->normalize_month($month - 1);
+        $next_month = $this->normalize_date_data($month + 1);
+        $before_month = $this->normalize_date_data($month - 1);
         return view('timetables.show', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
@@ -32,8 +32,8 @@ class LessonController extends Controller
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = $this->normalize_month($month + 1);
-        $before_month = $this->normalize_month($month - 1);
+        $next_month = $this->normalize_date_data($month + 1);
+        $before_month = $this->normalize_date_data($month - 1);
         return view('timetables.change', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
@@ -46,7 +46,6 @@ class LessonController extends Controller
     private function updateCalendar($lessons, $month, $year)
     {
         $calendar = $this->createCalendar($month, $year);
-        $month = substr($calendar, 20, 2);
         $date_lessons = $this->lessonData($lessons);
         foreach ($date_lessons as $lesson)
         {
@@ -73,7 +72,7 @@ class LessonController extends Controller
         $calendar = $this->getHeader($calendar);
         $calendar = str_replace(
             '<table>',
-            "<table tablemonth='" . $month . "'>",
+            "<table tablemonth='" . $month . "' tableyear='" . $year . "'>",
             $calendar);
         return $calendar;
     }
@@ -88,8 +87,8 @@ class LessonController extends Controller
         foreach ($lessons as $lesson)
         {
             $result[$i]['id'] = $lesson->id;
-            $result[$i]['date'] = substr($lesson->datetime,0, 10);
-            $result[$i]['time'] = substr($lesson->datetime,11, 8);
+            $result[$i]['date'] = $lesson->date;
+            $result[$i]['time'] = $lesson->time;
             $result[$i]['status'] = str_replace(' ', '', $lesson->status);
             $result[$i]['paid'] = $lesson->paid;
             $i++;
@@ -99,7 +98,7 @@ class LessonController extends Controller
     private function createCalendar($month, $year)
     {
         $data = $this->getDateData($month, $year);
-        $result = "<input hidden month=" . $data['month'] . "><span class='headerMonth'>" . self::MONTH_NAMES[$month] . "</span><tr>";
+        $result = "<span class='headerMonth'>" . self::MONTH_NAMES[$month] . " " . $year . "</span><tr>";
         $counter = 1;
         for ($i = 1; $i < $data['first_day']; $i++)
         {
@@ -138,12 +137,12 @@ class LessonController extends Controller
         }
         return $result;
     }
-    private function normalize_month($month)
+    private function normalize_date_data($date_data)
     {
-        if($month < 10) {
-            return '0' . $month;
+        if($date_data < 10) {
+            return '0' . $date_data;
         } else {
-            return $month;
+            return $date_data;
         }
     }
     const MONTH_ARR = [
