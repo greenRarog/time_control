@@ -1,58 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Lesson;
+use Illuminate\Http\Request;
 
 class ApiLessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function get($year, $month, $day)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($month, $day, $year)
-    {
-        $lesson = Lesson::where('date', $year . '-' . $month . '-' . $day);
-
-        return json_encode([
-            'id' => $lesson->id,
-            'date' => substr($lesson->datetime, 0,10),
-            'time' => substr($lesson->datetime, 11, 8),
-            'paid' => $lesson->paid,
-            'status' => $lesson->status,
-            'cost' => $lesson->cost,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)->get();
+        if($lessons->isNotEmpty()) {
+            $result = [];
+            $result['not_empty'] = true;
+            //$n = 0;
+            foreach($lessons as $lesson){
+                $result['array']['id'] = $lesson->id;
+                $result['array']['date'] = $lesson->date;
+                $result['array']['time'] = $lesson->time;
+                $result['array']['paid'] = $lesson->paid;
+                $result['array']['status'] = $lesson->status;
+                $result['array']['cost'] = $lesson->cost;
+                //$n++;
+            }
+            return json_encode($result);
+        } else {
+            $result = [];
+            $result['not_empty'] = false;
+            return json_encode($result);
+        }
     }
 }

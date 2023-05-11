@@ -39,6 +39,14 @@
             display:flex;
             justify-content: space-around;
         }
+        .edit{
+            display: inline-block;
+            padding: 15px;
+            border: 1px solid black;
+        }
+        .edit_elem{
+            padding: 5px;
+        }
     </style>
     <title>ученик {{ $student->name }}</title>
 </head>
@@ -52,7 +60,15 @@
         <input hidden class="inputDay"><br>
         <input hidden class="inputYear"><br>
 </div>
-
+<div class="edit" >
+    <div class="edit_elem"><input name="id"><br></div>
+    <div class="edit_elem">Date: <input name="date"><br></div>
+    <div class="edit_elem">Time: <input name="time"><br></div>
+    <div class="edit_elem">Paid: <input name="paid"><br></div>
+    <div class="edit_elem">Status: <input name="status"><br></div>
+    <div class="edit_elem">Cost: <input name="cost"><br></div>
+    <div class="edit_elem"><button>edit</button></div>
+</div>
 <script>
 let tables = document.querySelectorAll('table');
 let inputMonth = document.querySelector('.inputMonth');
@@ -76,16 +92,47 @@ function getInfo(){
         old.classList.remove('active');
     }
     this.classList.add('active');
-    //console.log(this.param);
-    /*fetch('api/year=' + year '&month=' + month + '&day=' + this.innerHTML).then(
+    let table = this.parentNode.parentNode.parentNode;
+    let year = table.getAttribute('tableyear');
+    let month = table.getAttribute('tablemonth');
+    let day = this.innerHTML;
+    if (day<10) {
+        day = '0' + day;
+    }
+    fetch('api/' + year + '/' + month + '/' + day).then(
         response => {
             return response.json();
         }
     ).then(
         data => {
             console.log(data);
+            data_transform(data);
         }
-    )*/
+    )
+}
+
+function data_transform(data){
+    if(data.not_empty) {
+        fill_edit(data.array);
+    } else {
+        alert('в этот день нет уроков!');
+    }
+}
+
+function fill_edit(obj){
+    let id = document.querySelector(`input[name="id"]`);
+    let date = document.querySelector(`input[name="data"]`);
+    let time = document.querySelector(`input[name="time"]`);
+    let status = document.querySelector(`input[name="status"]`);
+    let paid = document.querySelector(`input[name="paid"]`);
+    let cost = document.querySelector(`input[name='cost']`);
+    console.log(obj);
+    id.value = obj.id;
+    date.value = obj.date;
+    time.value = obj.time;
+    status.value = obj.status;
+    paid.value = obj.paid;
+    cost.value = obj.cost;
 }
 </script>
 </body>
