@@ -60,15 +60,16 @@
         <input hidden class="inputDay"><br>
         <input hidden class="inputYear"><br>
 </div>
-<div class="edit" >
-    <div class="edit_elem"><input name="id"><br></div>
+<form class="edit" method="POST">
+    <span class="edit_header">Изменение существующего урока</span>
+    <div class="edit_elem">ID: <input name="id"><br></div>
     <div class="edit_elem">Date: <input name="date"><br></div>
     <div class="edit_elem">Time: <input name="time"><br></div>
     <div class="edit_elem">Paid: <input name="paid"><br></div>
     <div class="edit_elem">Status: <input name="status"><br></div>
     <div class="edit_elem">Cost: <input name="cost"><br></div>
     <div class="edit_elem"><button>edit</button></div>
-</div>
+</form>
 <script>
 let tables = document.querySelectorAll('table');
 let inputMonth = document.querySelector('.inputMonth');
@@ -99,7 +100,7 @@ function getInfo(){
     if (day<10) {
         day = '0' + day;
     }
-    fetch('api/' + year + '/' + month + '/' + day).then(
+    fetch('api/read/' + year + '/' + month + '/' + day).then(
         response => {
             return response.json();
         }
@@ -121,7 +122,7 @@ function data_transform(data){
 
 function fill_edit(obj){
     let id = document.querySelector(`input[name="id"]`);
-    let date = document.querySelector(`input[name="data"]`);
+    let date = document.querySelector(`input[name="date"]`);
     let time = document.querySelector(`input[name="time"]`);
     let status = document.querySelector(`input[name="status"]`);
     let paid = document.querySelector(`input[name="paid"]`);

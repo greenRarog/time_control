@@ -6,7 +6,19 @@ use Illuminate\Http\Request;
 
 class ApiLessonController extends Controller
 {
-    public function get($year, $month, $day)
+    public function create(Request $request){
+        $lesson = new Lesson;
+        $lesson->date = $request->date;
+        $lesson->time = $request->time;
+        $lesson->paid = $request->paid;
+        $lesson->status = $request->status;
+        $lesson->cost = $request->cost;
+        $lesson->save();
+
+        return 'lesson create!';
+    }
+
+    public function read($year, $month, $day)
     {
         $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)->get();
         if($lessons->isNotEmpty()) {
@@ -28,5 +40,13 @@ class ApiLessonController extends Controller
             $result['not_empty'] = false;
             return json_encode($result);
         }
+    }
+
+    public function update(Request $request){
+
+    }
+
+    public function delete($id){
+        
     }
 }

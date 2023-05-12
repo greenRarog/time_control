@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/show/{id}', [LessonController::class, 'show']);
-Route::get('student/api/{year}/{month}/{day}', [ApiLessonController::class, 'get']);
+Route::get('student/api/read/{year}/{month}/{day}', [ApiLessonController::class, 'read']);
 Route::match(['get','post'], '/student/{id}', [LessonController::class, 'change']);
 
 require __DIR__.'/auth.php';
