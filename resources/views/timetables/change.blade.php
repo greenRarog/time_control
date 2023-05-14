@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        .hidden{
+            display: none !important;
+        }
         td:hover{
             background: yellow;
             cursor: pointer;
@@ -39,13 +42,12 @@
             display:flex;
             justify-content: space-around;
         }
-        .edit{
+        .menu {
+            border: 5px solid black;
             display: inline-block;
-            padding: 15px;
-            border: 1px solid black;
         }
-        .edit_elem{
-            padding: 5px;
+        .menu_button{
+            display: block;
         }
     </style>
     <title>ученик {{ $student->name }}</title>
@@ -60,27 +62,24 @@
         <input hidden class="inputDay"><br>
         <input hidden class="inputYear"><br>
 </div>
-<form class="edit" method="POST">
-    <span class="edit_header">Изменение существующего урока</span>
-    <div class="edit_elem">ID: <input name="id"><br></div>
-    <div class="edit_elem">Date: <input name="date"><br></div>
-    <div class="edit_elem">Time: <input name="time"><br></div>
-    <div class="edit_elem">Paid: <input name="paid"><br></div>
-    <div class="edit_elem">Status: <input name="status"><br></div>
-    <div class="edit_elem">Cost: <input name="cost"><br></div>
-    <div class="edit_elem"><button>edit</button></div>
-</form>
-<script>
-let tables = document.querySelectorAll('table');
-let inputMonth = document.querySelector('.inputMonth');
-let inputYear = document.querySelector('.inputYear');
-for(let table of tables){
-    table.addEventListener('click', function(){
-        inputMonth.value = table.getAttribute('tablemonth');
-        inputYear.value = table.getAttribute('tableyear');
-    });
-}
+<div hidden class="menu">
 
+</div>
+<div class="edit_menu" hidden>
+<form class="edit_menu" method="POST">
+    <span class="edit_menu_header">Изменение существующего урока</span>
+    <div class="edit_menu_elem">ID: <input name="id"><br></div>
+    <div class="edit_menu_elem">ID: <input name="student_id"><br></div>
+    <div class="edit_menu_elem">Date: <input name="date"><br></div>
+    <div class="edit_menu_elem">Time: <input name="time"><br></div>
+    <div class="edit_menu_elem">Paid: <input name="paid"><br></div>
+    <div class="edit_menu_elem">Status: <input name="status"><br></div>
+    <div class="edit_menu_elem">Cost: <input name="cost"><br></div>
+    <div class="edit_menu_elem"><input type="submit" value="обновить урок"></div>
+</form>
+<div class="edit_menu_elem"><button class="close_edit_button">закрыть меню</button></div>
+</div>
+<script>
 let tds = document.querySelectorAll('td');
 let inputDay = document.querySelector('.inputDay');
 for(let td of tds){
@@ -106,34 +105,77 @@ function getInfo(){
         }
     ).then(
         data => {
-            console.log(data);
-            data_transform(data);
+            create_menu(data.array);
         }
     )
 }
+function create_menu(lessons){
+    let menu_div = document.querySelector('div.menu');
+    menu_div.innerHTML = '';
+    let header_menu = document.createElement('h3');
+    header_menu.innerHTML = 'меню дня';
+    menu_div.append(header_menu);
+    let create_button = document.createElement('button');
+    create_button.classList.add('menu_button');
+    create_button.innerHTML = 'добавить урок';
+    menu_div.append(create_button);
+    menu_div.removeAttribute('hidden');
+    menu_div.classList.remove('hidden');
+    create_edit_button(lessons);
+    let close_button = document.createElement('button');
+    close_button.innerHTML = 'закрыть меню';
+    close_button.classList.add('menu_button');
+    menu_div.append(close_button);
+    close_button.addEventListener('click', function(){
+        let menu_div = document.querySelector('div.menu');
+        menu_div.classList.add('hidden');
+    })
+}
 
-function data_transform(data){
-    if(data.not_empty) {
-        fill_edit(data.array);
-    } else {
-        alert('в этот день нет уроков!');
+function create_edit_button(lessons){
+    let menu_div = document.querySelector('div.menu');
+    for(let lesson in lessons) {
+        let edit_button = document.createElement('button');
+        edit_button.classList.add('menu_button');
+        edit_button.innerHTML = 'изменить урок на ' + lessons[lesson].time;
+        edit_button.setAttribute('id', lesson);
+        edit_button.setAttribute('student_id', lessons[lesson].student_id);
+        edit_button.setAttribute('time', lessons[lesson].time);
+        edit_button.setAttribute('date', lessons[lesson].date);
+        edit_button.setAttribute('paid', lessons[lesson].paid);
+        edit_button.setAttribute('status', lessons[lesson].status);
+        edit_button.setAttribute('cost', lessons[lesson].cost);
+        menu_div.append(edit_button);
+        edit_button.addEventListener('click', create_edit_menu);
     }
 }
 
-function fill_edit(obj){
-    let id = document.querySelector(`input[name="id"]`);
-    let date = document.querySelector(`input[name="date"]`);
-    let time = document.querySelector(`input[name="time"]`);
-    let status = document.querySelector(`input[name="status"]`);
-    let paid = document.querySelector(`input[name="paid"]`);
-    let cost = document.querySelector(`input[name='cost']`);
-    console.log(obj);
-    id.value = obj.id;
-    date.value = obj.date;
-    time.value = obj.time;
-    status.value = obj.status;
-    paid.value = obj.paid;
-    cost.value = obj.cost;
+function create_edit_menu(){
+    let menu = document.querySelector('div.menu');
+    menu.setAttribute('hidden', true);
+    menu.classList.add('hidden');
+    let edit_menu = document.querySelector('div.edit_menu');
+    edit_menu.removeAttribute('hidden');
+    let input_id = document.querySelector(`input[name='id']`);
+    input_id.value = this.getAttribute('id');
+    let input_student_id = document.querySelector(`input[name='student_id']`);
+    input_student_id.value = this.getAttribute('student_id');
+    let input_date = document.querySelector(`input[name='date']`);
+    input_date.value = this.getAttribute('date');
+    let input_time = document.querySelector(`input[name='time']`);
+    input_time.value = this.getAttribute('time');
+    let input_paid = document.querySelector(`input[name='paid']`);
+    input_paid.value = this.getAttribute('paid');
+    let input_status = document.querySelector(`input[name='status']`);
+    input_status.value = this.getAttribute('status');
+    let input_cost = document.querySelector(`input[name='cost']`);
+    input_cost.value = this.getAttribute('cost');
+
+    let close_button = document.querySelector('button.close_edit_button');
+    close_button.addEventListener('click', function(){
+       let edit_menu = document.querySelector('div.edit_menu');
+       edit_menu.setAttribute('hidden', true);
+    });
 }
 </script>
 </body>
