@@ -64,27 +64,85 @@
 <div class="create_menu hidden">
     <form class="create_menu" method="POST">
         <span class="create_menu_header">Добавление урока</span>
-        <div class="create_menu_elem">student_id: <input name="student_id" value={{ $id }}><br></div>
-        <div class="create_menu_elem">Date: <input name="date"><br></div>
-        <div class="create_menu_elem">Time: <input name="time"><br></div>
-        <div class="create_menu_elem">Paid: <input name="paid"><br></div>
-        <div class="create_menu_elem">Status: <input name="status"><br></div>
-        <div class="create_menu_elem">Cost: <input name="cost"><br></div>
-        <div class="create_menu_elem"><input type="submit" value="добавить урок"></div>
+        <div class="create_menu_elem">
+            student_id:
+            <input class="create_menu_input" name="student_id" value={{ $id }}>
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            Date:
+            <input class="create_menu_input" name="date">
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            Time:
+            <input class="create_menu_input" name="time">
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            Paid:
+            <input class="create_menu_input" name="paid">
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            Status:
+            <input class="create_menu_input" name="status">
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            Cost:
+            <input class="create_menu_input" name="cost">
+            <br>
+        </div>
+        <div class="create_menu_elem">
+            <input class="create_menu_input" type="submit" value="добавить урок">
+        </div>
     </form>
-    <div class="create_menu_elem"><button class="close_edit_button">закрыть меню</button></div>
+    <div class="create_menu_elem">
+        <button class="close_create_button">закрыть меню</button>
+    </div>
 </div>
 <div class="edit_menu hidden">
 <form class="edit_menu" method="POST">
     <span class="edit_menu_header">Изменение существующего урока</span>
-    <div class="edit_menu_elem">ID: <input name="id"><br></div>
-    <div class="edit_menu_elem">student_ID: <input name="student_id"><br></div>
-    <div class="edit_menu_elem">Date: <input name="date"><br></div>
-    <div class="edit_menu_elem">Time: <input name="time"><br></div>
-    <div class="edit_menu_elem">Paid: <input name="paid"><br></div>
-    <div class="edit_menu_elem">Status: <input name="status"><br></div>
-    <div class="edit_menu_elem">Cost: <input name="cost"><br></div>
-    <div class="edit_menu_elem"><input type="submit" value="обновить урок"></div>
+    <div class="edit_menu_elem">
+        ID:
+        <input class='edit_menu_input' name="id">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        student_ID:
+        <input class='edit_menu_input' name="student_id">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        Date:
+        <input class='edit_menu_input' name="date">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        Time:
+        <input class='edit_menu_input' name="time">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        Paid:
+        <input class='edit_menu_input' name="paid">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        Status:
+        <input class='edit_menu_input' name="status">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        Cost:
+        <input class='edit_menu_input' name="cost">
+        <br>
+    </div>
+    <div class="edit_menu_elem">
+        <input type="submit" value="обновить урок">
+    </div>
 </form>
 <div class="edit_menu_elem"><button class="close_edit_button">закрыть меню</button></div>
 </div>
@@ -144,10 +202,7 @@ function create_menu(lessons, date){
     close_button.innerHTML = 'закрыть меню';
     close_button.classList.add('menu_button');
     menu_div.append(close_button);
-    close_button.addEventListener('click', function(){
-        let menu_div = document.querySelector('div.menu');
-        menu_div.classList.add('hidden');
-    })
+    close_button.addEventListener('click', hiddenAll);
 }
 function create_edit_button(lessons){
     let menu_div = document.querySelector('div.menu');
@@ -163,39 +218,38 @@ function create_edit_button(lessons){
         edit_button.setAttribute('status', lessons[lesson].status);
         edit_button.setAttribute('cost', lessons[lesson].cost);
         menu_div.append(edit_button);
-        edit_button.addEventListener('click', create_edit_menu.bind(edit_button));
+        edit_button.addEventListener('click', create_edit_menu);
     }
 }
 function create_edit_menu(){
     hiddenAll();
     let edit_menu = document.querySelector('div.edit_menu');
     edit_menu.classList.remove('hidden');
-    let input_id = document.querySelector(`input[name='id']`);
+    let input_id = document.querySelector(`input.edit_menu_input[name='id']`);
     input_id.value = this.getAttribute('id');
-    let input_student_id = document.querySelector(`input[name='student_id']`);
+    let input_student_id = document.querySelector(`input.edit_menu_input[name='student_id']`);
     input_student_id.value = this.getAttribute('student_id');
-    let input_date = document.querySelector(`input[name='date']`);
+    let input_date = document.querySelector(`input.edit_menu_input[name='date']`);
     input_date.value = this.getAttribute('date');
-    let input_time = document.querySelector(`input[name='time']`);
+    let input_time = document.querySelector(`input.edit_menu_input[name='time']`);
     input_time.value = this.getAttribute('time');
-    let input_paid = document.querySelector(`input[name='paid']`);
+    let input_paid = document.querySelector(`input.edit_menu_input[name='paid']`);
     input_paid.value = this.getAttribute('paid');
-    let input_status = document.querySelector(`input[name='status']`);
+    let input_status = document.querySelector(`input.edit_menu_input[name='status']`);
     input_status.value = this.getAttribute('status');
-    let input_cost = document.querySelector(`input[name='cost']`);
+    let input_cost = document.querySelector(`input.edit_menu_input[name='cost']`);
     input_cost.value = this.getAttribute('cost');
     let close_button = document.querySelector('button.close_edit_button');
-    close_button.addEventListener('click', function(){
-       let edit_menu = document.querySelector('div.edit_menu');
-       edit_menu.classList.add('hidden');
-    });
+    close_button.addEventListener('click', hiddenAll);
 }
 function create_menu_create(date){
     hiddenAll();
     let menu_create = document.querySelector('div.create_menu');
     menu_create.classList.remove('hidden');
-    let inputDate = document.querySelector(`input.create_menu_elem[name='date']`);
+    let inputDate = document.querySelector(`input.create_menu_input[name='date']`);
     inputDate.value = date;
+    let close_button = document.querySelector('button.close_create_button');
+    close_button.addEventListener('click', hiddenAll);
 }
 function update(){
 
