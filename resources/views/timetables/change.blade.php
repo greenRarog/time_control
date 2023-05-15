@@ -58,18 +58,27 @@
     <div>{!! $before_month_calendar !!}</div>
     <div>{!! $actual_calendar !!}</div>
     <div>{!! $next_month_calendar !!}</div>
-        <input hidden class="inputMonth"><br>
-        <input hidden class="inputDay"><br>
-        <input hidden class="inputYear"><br>
 </div>
-<div hidden class="menu">
-
+<div class="menu hidden">
 </div>
-<div class="edit_menu" hidden>
+<div class="create_menu hidden">
+    <form class="create_menu" method="POST">
+        <span class="create_menu_header">Добавление урока</span>
+        <div class="create_menu_elem">student_id: <input name="student_id" value={{ $id }}><br></div>
+        <div class="create_menu_elem">Date: <input name="date"><br></div>
+        <div class="create_menu_elem">Time: <input name="time"><br></div>
+        <div class="create_menu_elem">Paid: <input name="paid"><br></div>
+        <div class="create_menu_elem">Status: <input name="status"><br></div>
+        <div class="create_menu_elem">Cost: <input name="cost"><br></div>
+        <div class="create_menu_elem"><input type="submit" value="добавить урок"></div>
+    </form>
+    <div class="create_menu_elem"><button class="close_edit_button">закрыть меню</button></div>
+</div>
+<div class="edit_menu hidden">
 <form class="edit_menu" method="POST">
     <span class="edit_menu_header">Изменение существующего урока</span>
     <div class="edit_menu_elem">ID: <input name="id"><br></div>
-    <div class="edit_menu_elem">ID: <input name="student_id"><br></div>
+    <div class="edit_menu_elem">student_ID: <input name="student_id"><br></div>
     <div class="edit_menu_elem">Date: <input name="date"><br></div>
     <div class="edit_menu_elem">Time: <input name="time"><br></div>
     <div class="edit_menu_elem">Paid: <input name="paid"><br></div>
@@ -85,7 +94,6 @@ let inputDay = document.querySelector('.inputDay');
 for(let td of tds){
     td.addEventListener('click', getInfo);
 }
-
 function getInfo(){
     let olds = document.querySelectorAll('.active');
     for(let old of olds){
@@ -99,18 +107,29 @@ function getInfo(){
     if (day<10) {
         day = '0' + day;
     }
+    let date = year + '-' + month + '-' + day;
     fetch('api/read/' + year + '/' + month + '/' + day).then(
         response => {
             return response.json();
         }
     ).then(
         data => {
-            create_menu(data.array);
+            create_menu(data.array, date);
         }
     )
 }
-function create_menu(lessons){
+function hiddenAll(){
+    let menu = document.querySelector('div.menu');
+    menu.classList.add('hidden');
+    let edit_menu = document.querySelector('div.edit_menu');
+    edit_menu.classList.add('hidden');
+    let create_menu = document.querySelector('div.create_menu');
+    create_menu.classList.add('hidden');
+}
+function create_menu(lessons, date){
     let menu_div = document.querySelector('div.menu');
+    hiddenAll();
+    menu_div.classList.remove('hidden');
     menu_div.innerHTML = '';
     let header_menu = document.createElement('h3');
     header_menu.innerHTML = 'меню дня';
@@ -118,9 +137,8 @@ function create_menu(lessons){
     let create_button = document.createElement('button');
     create_button.classList.add('menu_button');
     create_button.innerHTML = 'добавить урок';
+    create_button.addEventListener('click', create_menu_create.bind(create_button, date));
     menu_div.append(create_button);
-    menu_div.removeAttribute('hidden');
-    menu_div.classList.remove('hidden');
     create_edit_button(lessons);
     let close_button = document.createElement('button');
     close_button.innerHTML = 'закрыть меню';
@@ -131,7 +149,6 @@ function create_menu(lessons){
         menu_div.classList.add('hidden');
     })
 }
-
 function create_edit_button(lessons){
     let menu_div = document.querySelector('div.menu');
     for(let lesson in lessons) {
@@ -146,16 +163,13 @@ function create_edit_button(lessons){
         edit_button.setAttribute('status', lessons[lesson].status);
         edit_button.setAttribute('cost', lessons[lesson].cost);
         menu_div.append(edit_button);
-        edit_button.addEventListener('click', create_edit_menu);
+        edit_button.addEventListener('click', create_edit_menu.bind(edit_button));
     }
 }
-
 function create_edit_menu(){
-    let menu = document.querySelector('div.menu');
-    menu.setAttribute('hidden', true);
-    menu.classList.add('hidden');
+    hiddenAll();
     let edit_menu = document.querySelector('div.edit_menu');
-    edit_menu.removeAttribute('hidden');
+    edit_menu.classList.remove('hidden');
     let input_id = document.querySelector(`input[name='id']`);
     input_id.value = this.getAttribute('id');
     let input_student_id = document.querySelector(`input[name='student_id']`);
@@ -170,12 +184,21 @@ function create_edit_menu(){
     input_status.value = this.getAttribute('status');
     let input_cost = document.querySelector(`input[name='cost']`);
     input_cost.value = this.getAttribute('cost');
-
     let close_button = document.querySelector('button.close_edit_button');
     close_button.addEventListener('click', function(){
        let edit_menu = document.querySelector('div.edit_menu');
-       edit_menu.setAttribute('hidden', true);
+       edit_menu.classList.add('hidden');
     });
+}
+function create_menu_create(date){
+    hiddenAll();
+    let menu_create = document.querySelector('div.create_menu');
+    menu_create.classList.remove('hidden');
+    let inputDate = document.querySelector(`input.create_menu_elem[name='date']`);
+    inputDate.value = date;
+}
+function update(){
+
 }
 </script>
 </body>
