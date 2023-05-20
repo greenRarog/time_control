@@ -50,10 +50,10 @@
             display: block;
         }
     </style>
-    <title>ученик {{ $student->name }}</title>
+    <title>Все ученики</title>
 </head>
 <body>
-расписание ученика {{ $student->name }}</br>
+расписание всех учеников</br>
 <div class="main">
     <div>{!! $before_month_calendar !!}</div>
     <div>{!! $actual_calendar !!}</div>
@@ -67,7 +67,7 @@
         <span class="create_menu_header">Добавление урока</span>
         <div class="create_menu_elem">
             student_id:
-            <input class="create_menu_input" name="student_id" value={{ $id }}>
+            <input class="create_menu_input" name="student_id">
             <br>
         </div>
         <div class="create_menu_elem">

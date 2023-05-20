@@ -7,7 +7,16 @@ use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
-    public function show($id)
+    public function adminView()
+    {
+        return view('timetables.adminView',
+        [
+            'last_week' => '1',
+            'actual_week' => '2',
+            'next_week' => '3',
+        ]);
+    }
+    public function show($id)//month
     {
         $student = User::find($id);
         $lessons = Lesson::where('student_id', $id)
@@ -24,8 +33,20 @@ class LessonController extends Controller
             'student' => $student,
         ]);
     }
-
-    public function change($id)
+    /*public function changeAll()
+    {
+        $lessons = Lesson::all();
+        $month = date('m', time());
+        $year = date('Y', time());
+        $next_month = $this->normalize_date_data($month + 1);
+        $before_month = $this->normalize_date_data($month - 1);
+        return view('timetables.changeAll', [
+            'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
+            'next_month_calendar' => $this->updateCalendar($lessons, $next_month, $year),
+            'before_month_calendar' => $this->updateCalendar($lessons, $before_month, $year),
+        ]);
+    }*/
+    public function change($id) //month
     {
         $student = User::find($id);
         $lessons = Lesson::where('student_id', $id)
@@ -42,8 +63,7 @@ class LessonController extends Controller
             'student' => $student,
         ]);
     }
-
-    private function updateCalendar($lessons, $month, $year)
+    private function updateCalendar($lessons, $month, $year)//month
     {
         $calendar = $this->createCalendar($month, $year);
         $date_lessons = $this->lessonData($lessons);
@@ -76,11 +96,11 @@ class LessonController extends Controller
             $calendar);
         return $calendar;
     }
-    private function getHeader($result)
+    private function getHeader($result)//month
     {
         return '<table><thead><tr><th>ПН</th><th>ВТ</th><th>СР</th><th>ЧТ</th><th>ПТ</th><th>СБ</th><th>ВСК</th></tr></thead><tbody>' . $result . '</tbody></table>';
     }
-    private function lessonData($lessons)
+    private function lessonData($lessons)//это надо убрать это кривое говно
     {
         $result = [];
         $i = 0;
@@ -95,7 +115,7 @@ class LessonController extends Controller
         }
         return $result;
     }
-    private function createCalendar($month, $year)
+    private function createCalendar($month, $year)//month
     {
         $data = $this->getDateData($month, $year);
         $result = "<span class='headerMonth'>" . self::MONTH_NAMES[$month] . " " . $year . "</span><tr>";
@@ -117,6 +137,8 @@ class LessonController extends Controller
         $result .= '</tr>';
         return $result;
     }
+
+
 
     private function getDateData($month, $year)
     {

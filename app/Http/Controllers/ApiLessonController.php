@@ -20,11 +20,9 @@ class ApiLessonController extends Controller
 
     public function read($year, $month, $day)
     {
-        $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)->get();
-        if($lessons->isNotEmpty()) {
+        $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)->get();//надо добавить фильтр по студику
             $result = [];
-            $result['not_empty'] = true;
-            foreach($lessons as $lesson){
+            foreach ($lessons as $lesson) {
                 $result['array'][$lesson->id]['student_id'] = $lesson->student_id;
                 $result['array'][$lesson->id]['date'] = $lesson->date;
                 $result['array'][$lesson->id]['time'] = $lesson->time;
@@ -33,15 +31,18 @@ class ApiLessonController extends Controller
                 $result['array'][$lesson->id]['cost'] = $lesson->cost;
             }
             return json_encode($result);
-        } else {
-            $result = [];
-            $result['not_empty'] = false;
-            return json_encode($result);
-        }
     }
-
     public function update(Request $request){
+        $lesson = Lesson::find($request->id);
+        $lesson->student_id = $request->student_id;
+        $lesson->date = $request->date;
+        $lesson->time = $request->time;
+        $lesson->paid = $request->paid;
+        $lesson->status = $request->status;
+        $lesson->cost = $lesson->cost;
+        $lesson->save();
 
+        return 'урок был обновлен!';
     }
 
     public function delete($id){

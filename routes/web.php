@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/show/{id}', [LessonController::class, 'show']);
 Route::get('student/api/read/{year}/{month}/{day}', [ApiLessonController::class, 'read']);
+Route::match(['post', 'get'], '/student/api/update', [ApiLessonController::class, 'update']);
 Route::match(['get','post'], '/student/{id}', [LessonController::class, 'change']);
+Route::match(['get','post'], '/adminView', [LessonController::class, 'adminView']);
 
 require __DIR__.'/auth.php';
