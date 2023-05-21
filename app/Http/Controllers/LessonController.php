@@ -11,11 +11,41 @@ class LessonController extends Controller
     {
         return view('timetables.adminView',
         [
-            'last_week' => '1',
-            'actual_week' => '2',
-            'next_week' => '3',
+            'last_week' => $this->get_week(17 - 7, 04, 2023),
+            'actual_week' => $this->get_week(17, 04, 2023),
+            'next_week' => $this->get_week(17 + 7, 04, 2023),
         ]);
     }
+    private function get_week($day, $month, $year)//week
+    {
+        $table = "<table class='week_table'>";
+        $month = $this->normalize_date_data($month);
+        $day = $this->normalize_date_data($day);
+        $week_day =date('w', mktime(0,0,0, $month, $day, $year));
+        for($i = 1; $i <= $week_day; $i++){
+            $table .= '<tr><th>' . self::WEEK_DAYS_ARR[$i] . '<br>' . ($day - $week_day + $i) . '.' . $month . '</th>';
+            $dateQuery = $year .  '-' . $month . '-' . $this->normalize_date_data($day - $week_day + $i);
+            $table .= $this->get_day_fill($dateQuery) . '</tr>';
+        }
+        for($i = $week_day + 1; $i <= 7; $i++) {
+            $table .= '<tr><th>' . self::WEEK_DAYS_ARR[$i] . '<br>' . ($day - $week_day + $i) . '.' . $month . '</th>';
+            $dateQuery = $year .  '-' . $month . '-' . $this->normalize_date_data($day - $week_day + $i);
+            $table .= $this->get_day_fill($dateQuery) . '</tr>';
+        }
+        $table .='</table>';
+        return $table;
+    }
+    private function get_day_fill($date)//week
+    {
+        $lessons = Lesson::where('date', $date)->get();
+        $result = "<th><table><tr><th><button class='create_button'>+</button></th></tr>";
+        foreach($lessons as $lesson){
+            $result .= '<tr><td>' . $lesson->time . ' <-> ' . $lesson->user->name . '</td></tr>';
+        }
+        $result .= '</table></th>';
+        return $result;
+    }
+
     public function show($id)//month
     {
         $student = User::find($id);
@@ -218,5 +248,14 @@ class LessonController extends Controller
         10 => "октябрь",
         11 => "ноябрь",
         12 => "декабрь",
+    ];
+    const WEEK_DAYS_ARR = [
+      1 => 'ПН',
+      2 => 'ВТ',
+      3 => 'СР',
+      4 => 'ЧТ',
+      5 => 'ПТ',
+      6 => 'СБ',
+      7 => 'ВСК',
     ];
 }
