@@ -18,9 +18,20 @@ class ApiLessonController extends Controller
         return 'lesson create!';
     }
 
-    public function read($year, $month, $day)
+    public function read()//надо добавить фильтр по студику
     {
-        $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)->get();//надо добавить фильтр по студику
+        $year = $_GET['year'];
+        $month = $_GET['month'];
+        $day = $_GET['day'];
+        if(isset($_GET['time'])){
+            $time = $_GET['time'];
+            $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)
+                            ->where('time', $time)
+                            ->get();
+        } else {
+            $lessons = Lesson::where('date', $year . '-' . $month . '-' . $day)
+                            ->get();
+        }
             $result = [];
             foreach ($lessons as $lesson) {
                 $result['array'][$lesson->id]['student_id'] = $lesson->student_id;
@@ -29,6 +40,7 @@ class ApiLessonController extends Controller
                 $result['array'][$lesson->id]['paid'] = $lesson->paid;
                 $result['array'][$lesson->id]['status'] = $lesson->status;
                 $result['array'][$lesson->id]['cost'] = $lesson->cost;
+                $result['array'][$lesson->id]['name'] = $lesson->user->name;
             }
             return json_encode($result);
     }

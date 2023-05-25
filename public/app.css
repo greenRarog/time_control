@@ -23,7 +23,7 @@ td:hover{
     text-decoration: underline;
 }
 .paid{
-    border:3px solid lightgreen;
+    border:3px solid lightskyblue;
 }
 .notpaid{
     border:3px solid lightcoral;
@@ -48,4 +48,7 @@ td:hover{
 }
 .week_table th{
     border:1px solid black;
+}
+.support div{
+    display: inline-block;
 }
