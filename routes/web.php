@@ -37,5 +37,8 @@ Route::get('student/api/read/{year}/{month}/{day}', [ApiLessonController::class,
 Route::match(['post', 'get'], '/student/api/update', [ApiLessonController::class, 'update']);
 Route::match(['get','post'], '/student/{id}', [LessonMonthController::class, 'change']);
 Route::match(['get','post'], '/adminView', [LessonWeekController::class, 'adminView']);
+Route::match(['get','post'], '/adminPanel', [StudentController::class, 'adminPanel']);
+Route::match(['get','post'], '/create', [StudentController::class, 'create']);
 Route::get('api/read', [ApiLessonController::class, 'read']);
+Route::get('api/delete/{id}', [ApiLessonController::class, 'delete']);
 require __DIR__.'/auth.php';

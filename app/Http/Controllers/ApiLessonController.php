@@ -34,7 +34,8 @@ class ApiLessonController extends Controller
         }
             $result = [];
             foreach ($lessons as $lesson) {
-                $result['array'][$lesson->id]['student_id'] = $lesson->student_id;
+                $result['array'][$lesson->id]['student_id'] = $lesson->student_id;//раз есть зависимость моделей, это по-идее можно убрать
+                $result['array'][$lesson->id]['lesson_id'] = $lesson->id;
                 $result['array'][$lesson->id]['date'] = $lesson->date;
                 $result['array'][$lesson->id]['time'] = $lesson->time;
                 $result['array'][$lesson->id]['paid'] = $lesson->paid;
@@ -45,19 +46,20 @@ class ApiLessonController extends Controller
             return json_encode($result);
     }
     public function update(Request $request){
-        $lesson = Lesson::find($request->id);
+        /*$lesson = Lesson::find($request->id);
         $lesson->student_id = $request->student_id;
         $lesson->date = $request->date;
         $lesson->time = $request->time;
         $lesson->paid = $request->paid;
         $lesson->status = $request->status;
-        $lesson->cost = $lesson->cost;
-        $lesson->save();
-
-        return 'урок был обновлен!';
+//        $lesson->cost = $lesson->cost;
+        $lesson->save();*/
+        echo $request->id . ' '. $request->date . ' ' . $request->time . ' ' . 'урок был обновлен! ';
+        echo $request->paid . ' = ' . $request->status;
     }
 
     public function delete($id){
-
+        $lesson = Lesson::find($id);
+        echo 'должен был быть удален урок id=' . $lesson->id . ' но пока не удален';
     }
 }

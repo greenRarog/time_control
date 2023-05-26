@@ -16,7 +16,7 @@ class LessonWeekController extends LessonController
             $day = $day + $_GET['inc'] * 7;
         }
 
-        $weeks = $this->last_actual_next_week_create(17,04,2023);//$day, $month, $year);
+        $weeks = $this->last_actual_next_week_create(30,04,2023);//$day, $month, $year);
 
         return view('timetables.adminView',
             [
@@ -26,7 +26,7 @@ class LessonWeekController extends LessonController
             ]);
     }
     private function last_actual_next_week_create($day, $month, $year)//week
-    {
+    {//!!!нужно доделать логику
         $result = [];
         $month = parent::normalize_date_data($month);
         $day = parent::normalize_date_data($day);
@@ -76,23 +76,30 @@ class LessonWeekController extends LessonController
         $day = $array['day'];
         $month = $array['month'];
         $year = $array['year'];
-        $table = "<table class='week_table' year='" . $array['year'] . "' month='" . $array['month'] . "'>";
-        $week_day =date('w', mktime(0,0,0, $month, $day, $year));
+        $table = "<table class='week_table'>";
+        $week_day = date('w', mktime(0,0,0, $month, $day, $year));
         for($i = 1; $i <= $week_day; $i++){
-            $table .= "<tr day=" . ($day - $week_day + $i) . "'><th>" . parent::WEEK_DAYS_ARR[$i] . '<br>' . ($day - $week_day + $i) . '.' . $month . '</th>';
-            $dateQuery = $year .  '-' . $month . '-' . parent::normalize_date_data($day - $week_day + $i);
-            $table .= $this->get_day_fill($dateQuery) . '</tr>';
+            if(($day - 1 + $i) > parent::MONTH_ARR[$month]) {
+                $month = parent::normalize_date_data($month++);
+                $day = '01';
+            }
+            $table .= '<tr><th>' . parent::WEEK_DAYS_ARR[$i] . '<br>' . ($day - $week_day + $i) . '.' . $month . '</th>';
+            $table .= $this->get_day_fill($year, $month, (parent::normalize_date_data($day - $week_day + $i))) . '</tr>';
         }
         for($i = $week_day + 1; $i <= 7; $i++) {
+            if(($day - 1 + $i) > parent::MONTH_ARR[$month]) {
+                $month = parent::normalize_date_data($month++);
+                $day = '01';
+            }
             $table .= "<tr day=" . ($day - $week_day + $i) . "'><th>" . parent::WEEK_DAYS_ARR[$i] . '<br>' . ($day - $week_day + $i) . '.' . $month . '</th>';
-            $dateQuery = $year .  '-' . $month . '-' . parent::normalize_date_data($day - $week_day + $i);
-            $table .= $this->get_day_fill($dateQuery) . '</tr>';
+            $table .= $this->get_day_fill($year, $month, (parent::normalize_date_data($day - $week_day + $i))) . '</tr>';
         }
         $table .='</table>';
         return $table;
     }
-    private function get_day_fill($date)//week
+    private function get_day_fill($year, $month, $day)//week
     {
+        $date = $year .  '-' . $month . '-' . $day;
         $lessons = Lesson::where('date', $date)->get();
         $result = "<th><table>";
         foreach($lessons as $lesson){
@@ -101,7 +108,7 @@ class LessonWeekController extends LessonController
             } else {
                 $class = $lesson->status . ' notpaid';
             }
-            $result .= "<tr><td class='" . $class .  "'>" . $lesson->time . ' ученик ' . $lesson->user->name . '</td></tr>';
+            $result .= "<tr><td class='" . $class . "' year='" . $year . "' month='" . $month. "' day='" . $day . "'>" . $lesson->time . ' ученик ' . $lesson->user->name . '</td></tr>';
         }
         $result .= '</table></th>';
         return $result;

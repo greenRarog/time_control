@@ -1,0 +1,6 @@
+.create_block_checkbox{
+    display: inline-block;
+}
+.hidden{
+    display: none !important;
+}

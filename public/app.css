@@ -23,7 +23,7 @@ td:hover{
     text-decoration: underline;
 }
 .paid{
-    border:3px solid lightskyblue;
+    border:3px solid lightgreen;
 }
 .notpaid{
     border:3px solid lightcoral;
