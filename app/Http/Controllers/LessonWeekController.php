@@ -16,7 +16,7 @@ class LessonWeekController extends LessonController
             $day = $day + $_GET['inc'] * 7;
         }
 
-        $weeks = $this->last_actual_next_week_create(30,04,2023);//$day, $month, $year);
+        $weeks = $this->last_actual_next_week_create(17,04,2023);//$day, $month, $year);
 
         return view('timetables.adminView',
             [
