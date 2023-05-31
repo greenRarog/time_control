@@ -9,19 +9,28 @@
 </head>
 <body>
 <div class="wrapper">
-    <form class="create_form" method="POST">
+    <form class="create_form" method="POST" action="/create_end">
         @csrf
         <div class="create_header">Добавление нового ученика:</div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="create_block">
             <label>
                 Имя:
-                <input name="name">
+                <input name="name" value={{ old('name') }}>
             </label>
         </div>
         <div class='create_block'>
             <label>
                 Почта:
-                <input name="email">
+                <input name="email" value={{ old('email') }}>
             </label>
         </div>
         <div class="create_block">
@@ -33,14 +42,15 @@
                 сгенерировать
             </button>
         </div>
+
         <div class="create_block">
-            <input hidden name="week_days" value=" ">
             @foreach($days_week_array as $key=>$elem)
                 <div class="create_block_checkbox">
                     <label>{{ $elem }}</label>
                     <input class="checkbox_day" value="{{ $key }}" type="checkbox">
                     <div class="create_block_checkbox_time hidden" key="{{ $key }}">
-                        <select name="time">
+                        <select name="{{$key}}">
+                            <option selected value="null">выберите время</option>
                             @foreach($hours_array as $hour)
                                 <option value="{{ $hour }}">{{ $hour }}</option>
                             @endforeach
@@ -49,6 +59,7 @@
                 </div>
             @endforeach
         </div>
+
         <input type="submit">
     </form>
 </div>

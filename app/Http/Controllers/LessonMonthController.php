@@ -20,8 +20,8 @@ class LessonMonthController extends LessonController
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = parent::normalize_date_data($month + 1);
-        $before_month = parent::normalize_date_data($month - 1);
+        $next_month = normalize_date_data($month + 1);
+        $before_month = normalize_date_data($month - 1);
         return view('timetables.show', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
@@ -37,8 +37,8 @@ class LessonMonthController extends LessonController
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = parent::normalize_date_data($month + 1);
-        $before_month = parent::normalize_date_data($month - 1);
+        $next_month = normalize_date_data($month + 1);
+        $before_month = normalize_date_data($month - 1);
         return view('timetables.change', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
@@ -83,25 +83,11 @@ class LessonMonthController extends LessonController
     {
         return '<table><thead><tr><th>ПН</th><th>ВТ</th><th>СР</th><th>ЧТ</th><th>ПТ</th><th>СБ</th><th>ВСК</th></tr></thead><tbody>' . $result . '</tbody></table>';
     }
-/*    private function lessonData($lessons)//это надо убрать это кривое говно
-    {
-        $result = [];
-        $i = 0;
-        foreach ($lessons as $lesson)
-        {
-            $result[$i]['id'] = $lesson->id;
-            $result[$i]['date'] = $lesson->date;
-            $result[$i]['time'] = $lesson->time;
-            $result[$i]['status'] = str_replace(' ', '', $lesson->status);
-            $result[$i]['paid'] = $lesson->paid;
-            $i++;
-        }
-        return $result;
-    }*/
+
     private function createCalendar($month, $year)
     {
         $data = $this->getDateData($month, $year);
-        $result = "<span class='headerMonth'>" . parent::MONTH_NAMES[$month] . " " . $year . "</span><tr>";
+        $result = "<span class='headerMonth'>" . MONTH_NAMES[$month] . " " . $year . "</span><tr>";
         $counter = 1;
         for ($i = 1; $i < $data['first_day']; $i++)
         {
@@ -125,7 +111,7 @@ class LessonMonthController extends LessonController
         $weekday_first = date('w', mktime(0,0,0, $month, 1, $year));
         $result = [];
         $result['first_day'] = $weekday_first;
-        $result['days'] = parent::MONTH_ARR[$month];
+        $result['days'] = MONTH_ARR[$month];
         $result['month'] = $month;
         if ($this->leap($year)){
             $result['days'] = 29;

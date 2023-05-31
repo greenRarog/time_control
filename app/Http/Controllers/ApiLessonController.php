@@ -46,16 +46,17 @@ class ApiLessonController extends Controller
             return json_encode($result);
     }
     public function update(Request $request){
-        /*$lesson = Lesson::find($request->id);
-        $lesson->student_id = $request->student_id;
+        $lesson = Lesson::find($request->id);
         $lesson->date = $request->date;
         $lesson->time = $request->time;
-        $lesson->paid = $request->paid;
         $lesson->status = $request->status;
-//        $lesson->cost = $lesson->cost;
-        $lesson->save();*/
-        echo $request->id . ' '. $request->date . ' ' . $request->time . ' ' . 'урок был обновлен! ';
-        echo $request->paid . ' = ' . $request->status;
+        if($request->paid === 'false') {
+            $lesson->paid = false;
+        } else if($request->paid === 'true'){
+            $lesson->paid = true;
+        }
+        $lesson->save();
+        echo 'урок был изменен';
     }
 
     public function delete($id){

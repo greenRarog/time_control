@@ -166,9 +166,9 @@ function create_change_menu(lesson) {
         optionNotPaid.setAttribute('value', false);
         selectPaid.append(optionNotPaid);
         if(lesson.paid){
-            optionPaid.setAttribute('selected', 'true');
+            optionPaid.setAttribute('selected', true);
         } else {
-            optionNotPaid.setAttribute('selected', 'true');
+            optionNotPaid.setAttribute('selected', false);
         }
         divPaid.append(selectPaid);
         let divStatus = document.createElement('div');
@@ -219,7 +219,7 @@ function create_change_menu(lesson) {
         edit_form.append(buttonClose);
     }
 }
-function change_lesson() {
+function change_lesson(event) {
     fetch('/student/api/update', {
         method: 'POST',
         body: new FormData(this),
@@ -235,6 +235,8 @@ function change_lesson() {
             alert(text);
         }
     )
+    hidden_all();
+    event.preventDefault();
 }
 
 function hidden_all(){
