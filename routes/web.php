@@ -40,7 +40,7 @@ Route::match(['get','post'], '/student/{id}', [LessonMonthController::class, 'ch
 Route::match(['get','post'], '/adminView', [LessonWeekController::class, 'adminView']);
 Route::match(['get','post'], '/adminPanel', [StudentController::class, 'adminPanel']);
 Route::get('/create', [StudentController::class, 'create']);
-Route::post('/create_end', [StudentController::class, 'create_end']);
+Route::post('/create_end', [StudentController::class, 'createEnd']);
 Route::get('api/read', [ApiLessonController::class, 'read']);
 Route::get('api/delete/{id}', [ApiLessonController::class, 'delete']);
 require __DIR__.'/auth.php';

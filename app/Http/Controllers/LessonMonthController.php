@@ -20,8 +20,8 @@ class LessonMonthController extends LessonController
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = normalize_date_data($month + 1);
-        $before_month = normalize_date_data($month - 1);
+        $next_month = normalizeDateData($month + 1);
+        $before_month = normalizeDateData($month - 1);
         return view('timetables.show', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
@@ -37,8 +37,8 @@ class LessonMonthController extends LessonController
             ->get();
         $month = date('m', time());
         $year = date('Y', time());
-        $next_month = normalize_date_data($month + 1);
-        $before_month = normalize_date_data($month - 1);
+        $next_month = normalizeDateData($month + 1);
+        $before_month = normalizeDateData($month - 1);
         return view('timetables.change', [
             'id' => $id,
             'actual_calendar' => $this->updateCalendar($lessons, $month, $year),

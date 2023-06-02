@@ -16,20 +16,20 @@ class LessonWeekController extends LessonController
 //            $day = $day + $_GET['inc'] * 7;
         }
 
-        $weeks = $this->last_actual_next_week_create($day, $month, $year);
+        $weeks = $this->lastActualNextWeekCreate($day, $month, $year);
 
         return view('timetables.adminView',
             [
-                'last_week' => $this->get_week($weeks['last']),
-                'actual_week' => $this->get_week($weeks['actual']),
-                'next_week' => $this->get_week($weeks['next']),
+                'last_week' => $this->getWeek($weeks['last']),
+                'actual_week' => $this->getWeek($weeks['actual']),
+                'next_week' => $this->getWeek($weeks['next']),
             ]);
     }
-    private function last_actual_next_week_create($day, $month, $year)//week
+    private function lastActualNextWeekCreate($day, $month, $year)//week
     {
         $result = [];
-        $month = normalize_date_data($month);
-        $day = normalize_date_data($day);
+        $month = normalizeDateData($month);
+        $day = normalizeDateData($day);
         $result['actual']['day'] = $day;
         $result['actual']['month'] = $month;
         $result['actual']['year'] = $year;
@@ -37,40 +37,40 @@ class LessonWeekController extends LessonController
             if($month === '01'){
                 $result['last']['year'] = $year - 1;
                 $result['last']['month'] = '12';
-                $result['last']['day'] = normalize_date_data(MONTH_ARR['12'] - 7 + $day);
+                $result['last']['day'] = normalizeDateData(MONTH_ARR['12'] - 7 + $day);
             } else {
-                $result['last']['month'] = normalize_date_data($month - 1);
+                $result['last']['month'] = normalizeDateData($month - 1);
                 $result['last']['year'] = $year;
-                $result['last']['day'] = normalize_date_data(MONTH_ARR[$month - 1] - 7 + $day);
+                $result['last']['day'] = normalizeDateData(MONTH_ARR[$month - 1] - 7 + $day);
             }
         } else {
             $result['last']['year'] = $year;
             $result['last']['month'] = $month;
-            $result['last']['day'] = normalize_date_data($day - 7);
+            $result['last']['day'] = normalizeDateData($day - 7);
         }
         if($month == 12) {
             if (($day + 7) > MONTH_ARR[$month]) {
-                $result['next']['day'] = normalize_date_data(MONTH_ARR[$month] - $day);
+                $result['next']['day'] = normalizeDateData(MONTH_ARR[$month] - $day);
                 $result['next']['month'] = '01';
                 $result['next']['year'] = $year + 1;
             } else {
-                $result['next']['day'] = normalize_date_data($day + 7);
-                $result['next']['month'] = normalize_date_data($month);
+                $result['next']['day'] = normalizeDateData($day + 7);
+                $result['next']['month'] = normalizeDateData($month);
                 $result['next']['year'] = $year;
             }
         } else {
             $result['next']['year'] = $year;
             if (($day + 7) > MONTH_ARR[$month]) {
-                $result['next']['day'] = normalize_date_data(MONTH_ARR[$month] - $day + 7);
-                $result['next']['month'] = normalize_date_data($month + 1);
+                $result['next']['day'] = normalizeDateData(MONTH_ARR[$month] - $day + 7);
+                $result['next']['month'] = normalizeDateData($month + 1);
             } else {
-                $result['next']['day'] = normalize_date_data($day + 7);
+                $result['next']['day'] = normalizeDateData($day + 7);
                 $result['next']['month'] = $month;
             }
         }
         return $result;
     }
-    private function get_week($array)//week
+    private function getWeek($array)//week
     {
         $day = $array['day'];
         $month = $array['month'];
@@ -80,7 +80,7 @@ class LessonWeekController extends LessonController
         $monday = $day + (1 - $week_day);
         if($monday < 0){
             if($month > 1) {
-                $month = normalize_date_data($month - 1);
+                $month = normalizeDateData($month - 1);
             } else {
                 $month = '12';
                 $year = $year--;
@@ -91,7 +91,7 @@ class LessonWeekController extends LessonController
         {
             if(($monday + $i - 1) > MONTH_ARR[$month]){
                 if($month > 1){
-                    $month = normalize_date_data($month + 1);
+                    $month = normalizeDateData($month + 1);
                 } else {
                     $month = '12';
                     $year = $year--;
@@ -99,14 +99,14 @@ class LessonWeekController extends LessonController
                 $monday = 2 - $i;
             }
             $table .= '<tr><th>' . WEEK_DAYS_ARR[$i] . '<br>' . ($monday + $i - 1) . '.' . $month . '</th>';
-            $table .= $this->get_day_fill($year, $month, (normalize_date_data($monday + $i - 1))) . '</tr>';
+            $table .= $this->getDayFill($year, $month, (normalizeDateData($monday + $i - 1))) . '</tr>';
         }
 
         $table .='</table>';
         return $table;
     }
 
-    private function get_day_fill($year, $month, $day)//week
+    private function getDayFill($year, $month, $day)//week
     {
         $date = $year .  '-' . $month . '-' . $day;
         $lessons = Lesson::where('date', $date)->get();

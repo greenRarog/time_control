@@ -1,6 +1,6 @@
 <?php
 
-function normalize_date_data($date_data)
+function normalizeDateData($date_data)
 {
     $date_data = (int)$date_data;
     if($date_data < 10) {

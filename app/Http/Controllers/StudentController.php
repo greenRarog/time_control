@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
-    public function adminPanel(){
-        $users = User::where('role','student')->get();
+    public function adminPanel()
+    {
+        $users = User::where('role', 'student')->get();
         return view('students.adminPanel', [
             'students' => $users,
         ]);
     }
+
     public function create()
     {
         $hours_array = ['8:00:00', '9:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00'];
@@ -25,9 +27,9 @@ class StudentController extends Controller
         ]);
     }
 
-    public function create_end(StudentCreateRequest $request)
+    public function createEnd(StudentCreateRequest $request)
     {
-        dd(normalize_date_data('1'));
+        dd(normalizeDateData('1'));
         if ($request->has('name') and $request->has('email') and $request->has('password')) {
             /*$user = New User;
             $user->name = $request->name;
@@ -37,8 +39,8 @@ class StudentController extends Controller
             $user->save();
             return redirect('/adminPanel');*/
             $time_array = [];
-            foreach (WEEK_DAYS_ARR as $key=>$elem){
-                if($request->$key != 'null') {
+            foreach (WEEK_DAYS_ARR as $key => $elem) {
+                if ($request->$key != 'null') {
                     $time_array[$key] = $request->$key;
                 }
             }
@@ -46,10 +48,11 @@ class StudentController extends Controller
 
         }
     }
-    private function seek_future_week_day($day, $month, $year, $week_day)
+
+    private function seekFutureWeekDay($day, $month, $year, $week_day)
     {
-        $week_day_inner = date('w', mktime(0,0,0, $month, $day, $year));
-        if($week_day != $week_day_inner) {
+        $week_day_inner = date('w', mktime(0, 0, 0, $month, $day, $year));
+        if ($week_day != $week_day_inner) {
             if ($week_day > $week_day_inner) {
                 $day += $week_day - $week_day_inner;
             } else {
@@ -72,4 +75,4 @@ class StudentController extends Controller
         $result['year'] = $year;
         return $result;
     }
- }
+}
