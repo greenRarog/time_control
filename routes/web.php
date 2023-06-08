@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/show/{id}', [LessonMonthController::class, 'show']);
-Route::get('/change/{id}', [LessonMonthController::class, 'change']);
+Route::match(['get', 'post'], '/change/{id}', [LessonMonthController::class, 'change']);
 Route::get('student/api/read/{year}/{month}/{day}', [ApiLessonController::class, 'read']);//тут все надо переделать на гет запрос
 Route::match(['post', 'get'], '/student/api/update', [ApiLessonController::class, 'update']);
 Route::match(['get','post'], '/student/{id}', [LessonMonthController::class, 'change']);

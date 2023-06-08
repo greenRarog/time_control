@@ -1,5 +1,6 @@
 {
-    "/handmade_script.js": "/handmade_script.js",
-    "/week_wrapper.js": "/week_wrapper.js",
-    "/app.css": "/app.css"
+    "/js/handmade_script.js": "/js/handmade_script.js",
+    "/js/week_wrapper.js": "/js/week_wrapper.js",
+    "/css/app.css": "/css/app.css",
+    "/css/adminPanel.css": "/css/adminPanel.css"
 }

@@ -13,11 +13,12 @@ function getInfo(){
     let year = table.getAttribute('tableyear');
     let month = table.getAttribute('tablemonth');
     let day = this.innerHTML;
+    let student_id = table.getAttribute('student_id');
     if (day<10) {
         day = '0' + day;
     }
     let date = year + '-' + month + '-' + day;
-    fetch('api/read/' + year + '/' + month + '/' + day).then(
+    fetch('/api/read/?student_id=' + student_id + '&year=' + year + '&month=' + month + '&day=' + day).then(
         response => {
             return response.json();
         }

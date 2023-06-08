@@ -117,7 +117,7 @@ class LessonWeekController extends LessonController
             } else {
                 $class = $lesson->status . ' notpaid';
             }
-            $result .= "<tr><td class='" . $class . "' year='" . $year . "' month='" . $month. "' day='" . $day . "'>" . $lesson->time . ' ученик ' . $lesson->user->name . '</td></tr>';
+            $result .= "<tr><td student_id='" . $lesson->user->id . "' class='" . $class . "' year='" . $year . "' month='" . $month. "' day='" . $day . "'>" . $lesson->time . ' ученик ' . $lesson->user->name . '</td></tr>';
         }
         $result .= '</table></th>';
         return $result;
