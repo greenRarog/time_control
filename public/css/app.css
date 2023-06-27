@@ -1,3 +1,37 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+a {
+    text-decoration: none;
+}
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    color: #DCDCDC;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: black;
+}
+main {
+    /* Чтобы занимал оставшееся пространство */
+    flex-grow: 1;
+}
+
+/*HEADER*/
+header {
+    background: #FFF8DC;
+    height: 100px;
+}
+
 @media (max-width: 400px) {
     .main{
         display: flex;
@@ -7,7 +41,6 @@
         min-width: 200px;
     }
 }
-
 .hidden{
     display: none !important;
 }
@@ -61,4 +94,15 @@ td:hover{
 }
 .support div{
     display: inline-block;
+}
+.create_block_checkbox{
+    display: inline-block;
+}
+
+/*FOOTER*/
+footer {
+    /* Чтобы footer не уменьшался */
+    flex-shrink: 0;
+    height: 50px;
+    background: #FFF8DC;
 }

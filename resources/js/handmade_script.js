@@ -35,6 +35,8 @@ function hiddenAll(){
     edit_menu.classList.add('hidden');
     let create_menu = document.querySelector('div.create_menu');
     create_menu.classList.add('hidden');
+    let massive_change_menu = documen.querySelector('div.massive_change_menu');
+    massive_change_menu.classList.add('hidden');
 }
 function create_menu(lessons, date){
     let menu_div = document.querySelector('div.menu');
@@ -123,4 +125,26 @@ function update(event){
         }
     )
     //event.preventDefault();
+}
+
+let massive_change_lessons = document.querySelector('button.massive_change_lessons');
+massive_change_lessons.addEventListener('click', function(){
+    hiddenAll();
+    let menu = documen.querySelector('div.massive_change_menu');
+    menu.classList.remove('hidden');
+})
+
+let massive_remove_lessons = document.querySelector('button.massive_remove_lessons');
+massive_remove_lessons.addEventListener('click', function(){
+    console.log('remove all');
+})
+
+let massive_add_lessons = document.querySelector('button.massive_add_lessons');
+massive_add_lessons.addEventListener('click', function(){
+    console.log('add');
+})
+
+let close_buttons = document.querySelectorAll('button.close_button');
+for(let button of close_buttons){
+    button.addEventListener('click', hiddenAll);
 }

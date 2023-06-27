@@ -1,3 +1,32 @@
+body {
+    margin: 0;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #FFF8DC;
+}
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+a {
+    text-decoration: none;
+}
+
+/*HEADER*/
+.header {
+    width: 100%;
+    margin: 0 auto;
+    height: 300px;
+    background: #4d99a5;
+}
+
 @media (max-width: 400px) {
     .main{
         display: flex;
@@ -7,7 +36,6 @@
         min-width: 200px;
     }
 }
-
 .hidden{
     display: none !important;
 }
@@ -61,4 +89,21 @@ td:hover{
 }
 .support div{
     display: inline-block;
+}
+.create_block_checkbox{
+    display: inline-block;
+}
+
+/*FOOTER*/
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: -75px auto 0;
+    display: flex;
+    height: 75px;
+    display: flex;
+    justify-content: flex-end;
+    background: #4d99a5;
 }

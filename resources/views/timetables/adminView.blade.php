@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Недельное расписание</title>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}">
-</head>
-<body>
+<x-app-layout>
 <div class="support">обозначения<br>
     <div class="paid">урок оплачен</div>
     <div class="notpaid">урок НЕ оплачен</div>
@@ -27,6 +17,5 @@
     <form class="edit_form" method="POST"></form>
 </div>
 <div class="menu_remove_lesson hidden"></div>
-</body>
 <script src="{{ asset('js/week_wrapper.js') }}"></script>
-</html>
+</x-app-layout>

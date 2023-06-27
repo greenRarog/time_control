@@ -57,6 +57,8 @@ function hiddenAll() {
   edit_menu.classList.add('hidden');
   var create_menu = document.querySelector('div.create_menu');
   create_menu.classList.add('hidden');
+  var massive_change_menu = documen.querySelector('div.massive_change_menu');
+  massive_change_menu.classList.add('hidden');
 }
 function create_menu(lessons, date) {
   var menu_div = document.querySelector('div.menu');
@@ -141,6 +143,34 @@ function update(event) {
     alert(text);
   });
   //event.preventDefault();
+}
+
+var massive_change_lessons = document.querySelector('button.massive_change_lessons');
+massive_change_lessons.addEventListener('click', function () {
+  hiddenAll();
+  var menu = documen.querySelector('div.massive_change_menu');
+  menu.classList.remove('hidden');
+});
+var massive_remove_lessons = document.querySelector('button.massive_remove_lessons');
+massive_remove_lessons.addEventListener('click', function () {
+  console.log('remove all');
+});
+var massive_add_lessons = document.querySelector('button.massive_add_lessons');
+massive_add_lessons.addEventListener('click', function () {
+  console.log('add');
+});
+var close_buttons = document.querySelectorAll('button.close_button');
+var _iterator3 = _createForOfIteratorHelper(close_buttons),
+  _step3;
+try {
+  for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+    var button = _step3.value;
+    button.addEventListener('click', hiddenAll);
+  }
+} catch (err) {
+  _iterator3.e(err);
+} finally {
+  _iterator3.f();
 }
 /******/ })()
 ;

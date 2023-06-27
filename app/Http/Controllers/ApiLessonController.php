@@ -20,7 +20,7 @@ class ApiLessonController extends Controller
         return 'lesson create!';
     }
 
-    public function read()//надо добавить фильтр по студику
+    public function read()
     {
         $student_id = $_GET['student_id'];
         $year = $_GET['year'];

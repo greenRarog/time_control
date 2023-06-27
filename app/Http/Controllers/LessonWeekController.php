@@ -23,6 +23,7 @@ class LessonWeekController extends LessonController
                 'last_week' => $this->getWeek($weeks['last']),
                 'actual_week' => $this->getWeek($weeks['actual']),
                 'next_week' => $this->getWeek($weeks['next']),
+                'title' => 'Недельное расписание',
             ]);
     }
     private function lastActualNextWeekCreate($day, $month, $year)//week

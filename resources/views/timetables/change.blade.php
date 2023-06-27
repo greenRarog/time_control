@@ -12,13 +12,23 @@
 </head>
 <body>
 расписание ученика {{ $student->name }}</br>
+<button class="massive_change_lessons">Массовое изменение уроков</button>
+
 <div class="main">
     <div>{!! $before_month_calendar !!}</div>
     <div>{!! $actual_calendar !!}</div>
     <div>{!! $next_month_calendar !!}</div>
 </div>
+
+<div class="massive_change_menu hidden">
+    <button class="massive_remove_lessons">удалить все уроки</button>
+    <button class="massive_add_lessons">добавить периодичный урок</button>
+    <button class="close_button">Х</button>
+</div>
+
 <div class="menu hidden">
 </div>
+
 <div class="create_menu hidden">
     <form class="create_menu">
         @csrf
@@ -58,7 +68,7 @@
         </div>
     </form>
     <div class="create_menu_elem">
-        <button class="close_create_button">закрыть меню</button>
+        <button class="close_button">X</button>
     </div>
 </div>
 <div class="edit_menu hidden">
@@ -105,7 +115,7 @@
         </div>
     </form>
     <div class="edit_menu_elem">
-        <button class="close_edit_button">закрыть меню</button>
+        <button class="close_button">X</button>
     </div>
 </div>
 
