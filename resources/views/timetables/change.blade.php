@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>ученик {{ $student->name }}</title>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}">
-
-
-</head>
-<body>
-расписание ученика {{ $student->name }}</br>
-<button class="massive_change_lessons">Массовое изменение уроков</button>
-
+<x-app-layout>
 <div class="main">
     <div>{!! $before_month_calendar !!}</div>
     <div>{!! $actual_calendar !!}</div>
@@ -118,7 +103,4 @@
         <button class="close_button">X</button>
     </div>
 </div>
-
-<script src="{{ asset('js/handmade_script.js') }}"></script>
-</body>
-</html>
+</x-app-layout>

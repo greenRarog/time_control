@@ -23,7 +23,6 @@ class LessonWeekController extends LessonController
                 'last_week' => $this->getWeek($weeks['last']),
                 'actual_week' => $this->getWeek($weeks['actual']),
                 'next_week' => $this->getWeek($weeks['next']),
-                'title' => 'Недельное расписание',
             ]);
     }
     private function lastActualNextWeekCreate($day, $month, $year)//week
@@ -99,7 +98,7 @@ class LessonWeekController extends LessonController
                 }
                 $monday = 2 - $i;
             }
-            $table .= '<tr><th>' . WEEK_DAYS_ARR[$i] . '<br>' . ($monday + $i - 1) . '.' . $month . '</th>';
+            $table .= '<tr><th width="20%">' . WEEK_DAYS_ARR[$i] . '<br>' . ($monday + $i - 1) . '.' . $month . '</th>';
             $table .= $this->getDayFill($year, $month, (normalizeDateData($monday + $i - 1))) . '</tr>';
         }
 
@@ -111,7 +110,7 @@ class LessonWeekController extends LessonController
     {
         $date = $year .  '-' . $month . '-' . $day;
         $lessons = Lesson::where('date', $date)->get();
-        $result = "<th><table>";
+        $result = "<th class='table_week_elem'><table>";
         foreach($lessons as $lesson){
             if($lesson->paid) {
                 $class = $lesson->status . ' paid';

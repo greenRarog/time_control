@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="adminPanel.css">
+<x-app-layout>
 
-    <title>Администрирование учеников</title>
-</head>
-<body>
-<a href="/create">добавить нового ученика!</a>
 <table>
     <thead>
     <tr>
         <th>Имя</th>
-        <th>Расписание</th>
     </tr>
     </thead>
     <tbody>
     @foreach($students as $student)
     <tr>
-        <td>{{ $student->name }}</td>
-        <td><a href="change/{{ $student->id }}">расписание ученика</a></td>
-        <td><button class='remove_button' student_id="{{ $student->id }}">удалить</button></td>
+        <td><a href="change/{{ $student->id }}">{{ $student->name }}</a></td>
+        <td><button class="TC_AP_addLessons">Добавить уроки</button></td>
+        <td><button class='TC_AP_removeButton' student_id="{{ $student->id }}">удалить</button></td>
     </tr>
     @endforeach
     </tbody>
@@ -63,5 +53,5 @@
         remove_menu.classList.add('hidden');
     }
 </script>
-</body>
-</html>
+
+</x-app-layout>

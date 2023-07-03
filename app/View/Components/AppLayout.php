@@ -4,6 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Route;
+
 
 class AppLayout extends Component
 {
@@ -12,6 +14,14 @@ class AppLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.app');
+        $name = Route::currentRouteName();
+        if (isset($name)) {
+            $title = $name;
+        } else {
+            $title = 'Сайт time_control';
+        }
+        return view('layouts.app', [
+            'title' => $title,
+        ]);
     }
 }

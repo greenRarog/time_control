@@ -3,8 +3,6 @@ services:
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmintime_control
-        environment:
-            - PMA_ARBITRARY=1
         restart: "no"
         ports:
             - 8070:80

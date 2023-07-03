@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="support">обозначения<br>
+<div class="support">
     <div class="paid">урок оплачен</div>
     <div class="notpaid">урок НЕ оплачен</div>
     <div class="done">урок проведен</div>

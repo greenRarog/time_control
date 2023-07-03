@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/adminPanel.css">
-
-    <title>Создание ученика</title>
-</head>
-<body>
-<div class="wrapper">
+<x-app-layout>
     <form class="create_form" method="POST" action="/create_end">
         @csrf
         <div class="create_header">Добавление нового ученика:</div>
@@ -62,10 +52,6 @@
 
         <input type="submit">
     </form>
-</div>
-</body>
-
-
 
 <script>
     let checkboxs = document.querySelectorAll('input.checkbox_day');
@@ -105,4 +91,4 @@
         return res;
     }
 </script>
-</html>
+</x-app-layout>

@@ -20,9 +20,9 @@ class LessonMonthController extends LessonController
         $before_month = normalizeDateData($month - 1);
         return view('timetables.show', [
             'id' => $id,
-            'actual_calendar' => $this->updateCalendar($lessons, $month, $year),
-            'next_month_calendar' => $this->updateCalendar($lessons, $next_month, $year),
-            'before_month_calendar' => $this->updateCalendar($lessons, $before_month, $year),
+            'actual_calendar' => $this->updateCalendar($lessons, $month, $year, $id),
+            'next_month_calendar' => $this->updateCalendar($lessons, $next_month, $year, $id),
+            'before_month_calendar' => $this->updateCalendar($lessons, $before_month, $year, $id),
             'student' => $student,
         ]);
     }

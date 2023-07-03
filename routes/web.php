@@ -19,29 +19,31 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
+/*Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+});*/
 
-Route::get('/show/{id}', [LessonMonthController::class, 'show']);
-Route::match(['get', 'post'], '/change/{id}', [LessonMonthController::class, 'change']);
-Route::get('student/api/read', [ApiLessonController::class, 'read']);
-Route::match(['post', 'get'], '/student/api/update', [ApiLessonController::class, 'update']);
-Route::match(['get','post'], '/student/{id}', [LessonMonthController::class, 'change']);
-Route::match(['get','post'], '/adminView', [LessonWeekController::class, 'adminView']);
-Route::match(['get','post'], '/adminPanel', [StudentController::class, 'adminPanel']);
-Route::get('/create', [StudentController::class, 'create']);
-Route::post('/create_end', [StudentController::class, 'createEnd']);
-Route::get('api/read', [ApiLessonController::class, 'read']);
-Route::get('api/delete/{id}', [ApiLessonController::class, 'delete']);
+Route::get('/', function(){
+    return view('resume');
+})->name('Обо мне');
+Route::get('/contacts', function(){
+   return view('contacts');
+})->name('Контакты');
+Route::middleware('auth')->group(function () {
+    Route::get('/show/{id}', [LessonMonthController::class, 'show'])->name('Просмотр занятий учеником');
+    Route::middleware('teacher')->group(function(){
+        Route::match(['get', 'post'], '/change/{id}', [LessonMonthController::class, 'change']);
+        Route::match(['get','post'], '/student/{id}', [LessonMonthController::class, 'change']);
+        Route::match(['get','post'], '/adminView', [LessonWeekController::class, 'adminView'])->name('Недельное расписания учителя');
+        Route::match(['get','post'], '/adminPanel', [StudentController::class, 'adminPanel'])->name('Панель управления учителя');
+        Route::get('/create', [StudentController::class, 'create'])->name('Создать нового ученика');
+        Route::post('/create_end', [StudentController::class, 'createEnd']);
+        Route::get('api/read', [ApiLessonController::class, 'read']);
+        Route::get('api/delete/{id}', [ApiLessonController::class, 'delete']);
+        Route::get('student/api/read', [ApiLessonController::class, 'read']);
+        Route::match(['post', 'get'], '/student/api/update', [ApiLessonController::class, 'update']);
+    });
+});
 require __DIR__.'/auth.php';

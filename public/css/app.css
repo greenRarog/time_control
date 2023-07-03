@@ -15,11 +15,11 @@ html {
 }
 body {
     margin: 0;
-    color: #DCDCDC;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     color: black;
+    background-image: url('../img/background1.jpg');
 }
 main {
     /* Чтобы занимал оставшееся пространство */
@@ -29,7 +29,28 @@ main {
 /*HEADER*/
 header {
     background: #FFF8DC;
-    height: 100px;
+    height: 140px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.logo {
+    height: 130px;
+    border-radius: 5px;
+}
+
+.contex {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+}
+.wrapper {
+    background: #FFF8DC;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 @media (max-width: 400px) {
@@ -44,7 +65,10 @@ header {
 .hidden{
     display: none !important;
 }
-td:hover{
+.table_header_row {
+    width: 200px;
+}
+th.table_week_elem:hover{
     background: yellow;
     cursor: pointer;
 }
@@ -99,10 +123,73 @@ td:hover{
     display: inline-block;
 }
 
+.double-border-button {
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px 20px;
+    padding: 10px 30px;
+    position: relative;
+    border: 2px solid #f1c40f;
+    color: #f1c40f;
+    font-family: 'Montserrat', sans-serif;
+    transition: .4s;
+}
+
+/*IMPORT NAV MENU STYLE*/
+ul.navmenu {
+    list-style: none; /*убираем маркеры списка*/
+    margin: 0; /*убираем отступы*/
+    padding-left: 0; /*убираем отступы*/
+    margin-top:25px; /*делаем отступ сверху*/
+}
+a.navmenu_a {
+    text-decoration: none; /*убираем подчеркивание текста ссылок*/
+    background:#f1c40f; /*добавляем фон к пункту меню*/
+    color:#fff; /*меняем цвет ссылок*/
+    padding:10px; /*добавляем отступ*/
+    font-family: arial; /*меняем шрифт*/
+    border-radius:4px; /*добавляем скругление*/
+    -moz-transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
+    -o-transition: all 0.3s 0.01s ease;
+    -webkit-transition: all 0.3s 0.01s ease;
+}
+a.navmenu_a:hover {
+    background:#1C85BB;/*добавляем эффект при наведении*/
+}
+li.navmenu_li {
+    float:left; /*Размещаем список горизонтально для реализации меню*/
+    margin-right:5px; /*Добавляем отступ у пунктов меню*/
+
+}
+/*IMPORT BUTTON STYLE*/
+.double-border-button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border: 2px solid rgba(0, 0, 0, 0);
+    transition: .4s;
+}
+.double-border-button:hover:after {
+    border-color: #f1c40f;
+    width: calc(100% - 10px);
+    height: calc(100% + 10px);
+}
+
 /*FOOTER*/
 footer {
     /* Чтобы footer не уменьшался */
     flex-shrink: 0;
     height: 50px;
     background: #FFF8DC;
+}
+.wrapper_footer {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 30px;
 }
